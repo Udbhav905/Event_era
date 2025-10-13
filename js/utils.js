@@ -85,6 +85,42 @@ class Utils {
             timeout = setTimeout(later, wait);
         };
     }
+    // Add this to your existing Utils class
+static handleImageError(imgElement, eventTitle = 'Event') {
+    // Create a placeholder div with event initial and background color
+    const placeholder = document.createElement('div');
+    placeholder.className = 'image-placeholder';
+    placeholder.innerHTML = `
+        <div class="placeholder-content">
+            <i class="fas fa-calendar-alt"></i>
+            <span>${eventTitle.charAt(0).toUpperCase()}</span>
+        </div>
+    `;
+    
+    // Generate a consistent color based on event title
+    const colors = ['#6366f1', '#f59e0b', '#10b981', '#ec4899', '#8b5cf6'];
+    const colorIndex = eventTitle.length % colors.length;
+    placeholder.style.backgroundColor = colors[colorIndex];
+    
+    // Replace the broken image with placeholder
+    imgElement.parentNode.replaceChild(placeholder, imgElement);
+}
+
+static handleVideoError(videoElement, eventTitle = 'Event') {
+    // Create a placeholder for video
+    const placeholder = document.createElement('div');
+    placeholder.className = 'video-placeholder-error';
+    placeholder.innerHTML = `
+        <div class="placeholder-content">
+            <i class="fas fa-video-slash"></i>
+            <span>Video Not Available</span>
+            <p>${eventTitle}</p>
+        </div>
+    `;
+    
+    // Replace the broken video with placeholder
+    videoElement.parentNode.replaceChild(placeholder, videoElement);
+}
 }
 
 // Make Utils available globally

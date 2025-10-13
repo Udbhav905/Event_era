@@ -286,39 +286,43 @@ class EventsManager {
         });
     }
 
-    createEventCard(event) {
-        const isOwner = auth.isLoggedIn() && event.createdBy === auth.getCurrentUser().id;
-        const categoryColor = window.Utils ? Utils.getCategoryColor(event.category) : '#6c757d';
-        const formattedDate = window.Utils ? Utils.formatDate(event.date) : event.date;
-        const formattedTime = window.Utils ? Utils.formatTime(event.time) : event.time;
-        
-        // Add video icon if event has video
-        const videoIcon = event.video ? '<div class="video-icon">🎥</div>' : '';
-        
-        return `
-            <div class="event-card ${event.video ? 'video-event-card' : ''}">
-                <div class="event-media">
-                    <img src="${event.image}" alt="${event.title}" class="event-image">
-                    ${videoIcon}
+   createEventCard(event) {
+    const isOwner = auth.isLoggedIn() && event.createdBy === auth.getCurrentUser().id;
+    const categoryColor = window.Utils ? Utils.getCategoryColor(event.category) : '#6c757d';
+    const formattedDate = window.Utils ? Utils.formatDate(event.date) : event.date;
+    const formattedTime = window.Utils ? Utils.formatTime(event.time) : event.time;
+    
+    // Add video icon if event has video
+    const videoIcon = event.video ? '<div class="video-icon">🎥</div>' : '';
+    
+    return `
+        <div class="event-card ${event.video ? 'video-event-card' : ''}">
+            <div class="event-media">
+                <img src="${event.image}" 
+                     alt="${event.title}" 
+                     class="event-image"
+                     onerror="Utils.handleImageError(this, '${event.title.replace(/'/g, "\\'")}')"
+                     loading="lazy">
+                ${videoIcon}
+            </div>
+            <div class="event-content">
+                <h3 class="event-title">${event.title}</h3>
+                <div class="event-meta">
+                    <span>${formattedDate}</span>
+                    <span>${formattedTime}</span>
                 </div>
-                <div class="event-content">
-                    <h3 class="event-title">${event.title}</h3>
-                    <div class="event-meta">
-                        <span>${formattedDate}</span>
-                        <span>${formattedTime}</span>
-                    </div>
-                    <span class="event-category" style="background-color: ${categoryColor}20; color: ${categoryColor};">
-                        ${event.category.charAt(0).toUpperCase() + event.category.slice(1)}
-                    </span>
-                    <p class="event-description">${event.description.substring(0, 100)}...</p>
-                    <div class="event-actions">
-                        <button class="btn btn-primary view-event" data-event-id="${event.id}">View Details</button>
-                        ${isOwner ? `<button class="btn btn-danger delete-event" data-event-id="${event.id}">Delete</button>` : ''}
-                    </div>
+                <span class="event-category" style="background-color: ${categoryColor}20; color: ${categoryColor};">
+                    ${event.category.charAt(0).toUpperCase() + event.category.slice(1)}
+                </span>
+                <p class="event-description">${event.description.substring(0, 100)}...</p>
+                <div class="event-actions">
+                    <button class="btn btn-primary view-event" data-event-id="${event.id}">View Details</button>
+                    ${isOwner ? `<button class="btn btn-danger delete-event" data-event-id="${event.id}">Delete</button>` : ''}
                 </div>
             </div>
-        `;
-    }
+        </div>
+    `;
+}
 
     showEventDetails(eventId) {
         const event = this.events.find(e => e.id === eventId);
@@ -336,8 +340,11 @@ class EventsManager {
 
         // Create media section - show video if available, otherwise show image
         const mediaSection = event.video ? 
-            this.createVideoSection(event) : 
-            `<img src="${event.image}" alt="${event.title}" class="event-detail-image">`;
+    this.createVideoSection(event) : 
+    `<img src="${event.image}" 
+          alt="${event.title}" 
+          class="event-detail-image"
+          onerror="Utils.handleImageError(this, '${event.title.replace(/'/g, "\\'")}')">`;
 
         content.innerHTML = `
             <div class="event-detail-header">
@@ -445,7 +452,9 @@ class EventsManager {
             alert('Event deleted successfully');
         }
     }
+    
 }
+
 
 // Initialize EventsManager only after DOM is ready
 document.addEventListener('DOMContentLoaded', function() {
