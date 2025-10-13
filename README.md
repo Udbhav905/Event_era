@@ -1,44 +1,41 @@
-Eventera - Event Management Platform 🎉
-https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=1200&h=400&fit=crop
+# Eventera - Event Management Platform 🎉
 
 A modern, dynamic event management website built with pure HTML, CSS, and JavaScript. Discover, create, and join amazing events with an intuitive and attractive user interface.
 
-✨ Features
-🎯 Core Functionality
-Event Discovery - Browse and search through events
+![Eventera Screenshot](https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=1200&h=400&fit=crop)
 
-Event Creation - Create and manage your own events
+## ✨ Features
 
-User Authentication - Secure registration and login system
+### 🎯 Core Functionality
+- **Event Discovery** - Browse and search through events
+- **Event Creation** - Create and manage your own events  
+- **User Authentication** - Secure registration and login system
+- **Media Support** - Upload images and videos for events
+- **Advanced Filtering** - Filter by category, date, and keywords
 
-Media Support - Upload images and videos for events
+### 🎨 Modern UI/UX
+- **Responsive Design** - Works perfectly on all devices
+- **Beautiful Animations** - Engaging micro-interactions
+- **Glass Morphism** - Modern design with backdrop effects
+- **Interactive Elements** - Hover effects and transitions
+- **Gradient Color Scheme** - Professional purple/orange palette
 
-Advanced Filtering - Filter by category, date, and keywords
+### 🔧 Technical Features
+- **Local Storage** - Persistent data without backend
+- **Dynamic Content** - Real-time updates without page refresh
+- **Video Integration** - Support for event videos and previews
+- **Search & Filter** - Advanced event discovery
+- **Modal System** - Clean popup interfaces
 
-🎨 Modern UI/UX
-Responsive Design - Works perfectly on all devices
+## 🚀 Quick Start
 
-Beautiful Animations - Engaging micro-interactions
+### Prerequisites
+- Modern web browser (Chrome, Firefox, Safari, Edge)
+- Local server (for best experience)
 
-Glass Morphism - Modern design with backdrop effects
+### Installation
 
-Interactive Elements - Hover effects and transitions
-
-Gradient Color Scheme - Professional purple/orange palette
-
-🔧 Technical Features
-Local Storage - Persistent data without backend
-
-Dynamic Content - Real-time updates without page refresh
-
-Video Integration - Support for event videos and previews
-
-Search & Filter - Advanced event discovery
-
-Modal System - Clean popup interfaces
-
-🚀 Quick Start
-Prerequisites
-Modern web browser (Chrome, Firefox, Safari, Edge)
-
-Local server (for best experience)
+1. **Clone the repository**
+```bash
+git clone https://github.com/your-username/eventera-website.git
+cd eventera-website
