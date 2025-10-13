@@ -33,9 +33,4 @@ A modern, dynamic event management website built with pure HTML, CSS, and JavaSc
 - Modern web browser (Chrome, Firefox, Safari, Edge)
 - Local server (for best experience)
 
-### Installation
 
-1. **Clone the repository**
-```bash
-git clone https://github.com/your-username/eventera-website.git
-cd eventera-website
