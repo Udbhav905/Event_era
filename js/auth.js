@@ -11,19 +11,19 @@ class Auth {
     }
 
     setupEventListeners() {
-        // Auth buttons
+        
         document.getElementById('loginBtn').addEventListener('click', () => this.showAuthModal('login'));
         document.getElementById('registerBtn').addEventListener('click', () => this.showAuthModal('register'));
         document.getElementById('logoutBtn').addEventListener('click', () => this.logout());
 
-        // Modal close
+   
         document.querySelectorAll('.close').forEach(closeBtn => {
             closeBtn.addEventListener('click', (e) => {
                 e.target.closest('.modal').classList.add('hidden');
             });
         });
 
-        // Close modal when clicking outside
+        
         document.getElementById('authModal').addEventListener('click', (e) => {
             if (e.target.id === 'authModal') {
                 e.target.classList.add('hidden');
@@ -38,11 +38,11 @@ class Auth {
         authForms.innerHTML = this.getAuthFormsHTML(activeTab);
         modal.classList.remove('hidden');
 
-        // Setup form submissions
+        
         document.getElementById('loginForm').addEventListener('submit', (e) => this.handleLogin(e));
         document.getElementById('registerForm').addEventListener('submit', (e) => this.handleRegister(e));
 
-        // Setup tab switching
+        
         document.querySelectorAll('.auth-tab').forEach(tab => {
             tab.addEventListener('click', (e) => {
                 const tabName = e.target.dataset.tab;
@@ -171,6 +171,8 @@ class Auth {
     getCurrentUser() {
         return this.currentUser;
     }
+    
 }
+
 
 const auth = new Auth();

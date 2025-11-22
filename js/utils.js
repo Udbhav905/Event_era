@@ -1,4 +1,4 @@
-// Utility Functions
+
 class Utils {
     static formatDate(dateString) {
         const options = { year: 'numeric', month: 'long', day: 'numeric' };
@@ -85,43 +85,77 @@ class Utils {
             timeout = setTimeout(later, wait);
         };
     }
-    // Add this to your existing Utils class
-static handleImageError(imgElement, eventTitle = 'Event') {
-    // Create a placeholder div with event initial and background color
-    const placeholder = document.createElement('div');
-    placeholder.className = 'image-placeholder';
-    placeholder.innerHTML = `
-        <div class="placeholder-content">
-            <i class="fas fa-calendar-alt"></i>
-            <span>${eventTitle.charAt(0).toUpperCase()}</span>
-        </div>
-    `;
-    
-    // Generate a consistent color based on event title
-    const colors = ['#6366f1', '#f59e0b', '#10b981', '#ec4899', '#8b5cf6'];
-    const colorIndex = eventTitle.length % colors.length;
-    placeholder.style.backgroundColor = colors[colorIndex];
-    
-    // Replace the broken image with placeholder
-    imgElement.parentNode.replaceChild(placeholder, imgElement);
+
+    static handleImageError(imgElement, eventTitle = 'Event') {
+        
+        const placeholder = document.createElement('div');
+        placeholder.className = 'image-placeholder';
+        placeholder.innerHTML = `
+            <div class="placeholder-content">
+                <i class="fas fa-calendar-alt"></i>
+                <span>${eventTitle.charAt(0).toUpperCase()}</span>
+            </div>
+        `;
+        
+        
+        const colors = ['#6366f1', '#f59e0b', '#10b981', '#ec4899', '#8b5cf6'];
+        const colorIndex = eventTitle.length % colors.length;
+        placeholder.style.backgroundColor = colors[colorIndex];
+        
+        
+        imgElement.parentNode.replaceChild(placeholder, imgElement);
+    }
+
+    static handleVideoError(videoElement, eventTitle = 'Event') {
+       
+        const placeholder = document.createElement('div');
+        placeholder.className = 'video-placeholder-error';
+        placeholder.innerHTML = `
+            <div class="placeholder-content">
+                <i class="fas fa-video-slash"></i>
+                <span>Video Not Available</span>
+                <p>${eventTitle}</p>
+            </div>
+        `;
+        
+        
+        videoElement.parentNode.replaceChild(placeholder, videoElement);
+    }
 }
 
-static handleVideoError(videoElement, eventTitle = 'Event') {
-    // Create a placeholder for video
-    const placeholder = document.createElement('div');
-    placeholder.className = 'video-placeholder-error';
-    placeholder.innerHTML = `
-        <div class="placeholder-content">
-            <i class="fas fa-video-slash"></i>
-            <span>Video Not Available</span>
-            <p>${eventTitle}</p>
-        </div>
-    `;
-    
-    // Replace the broken video with placeholder
-    videoElement.parentNode.replaceChild(placeholder, videoElement);
-}
+function scrollToSection(sectionId) {
+    document.getElementById(sectionId).scrollIntoView({ 
+        behavior: 'smooth' 
+    });
 }
 
-// Make Utils available globally
+function showDemoAlert() {
+    if (window.Utils) {
+        Utils.showNotification('Demo feature coming soon!', 'info');
+    } else {
+        alert('Demo feature coming soon!');
+    }
+}
+
+function subscribeNewsletter() {
+    const email = document.getElementById('newsletterEmail').value;
+    if (email && email.includes('@')) {
+        if (window.Utils) {
+            Utils.showNotification('Thanks for subscribing to our newsletter!', 'success');
+        } else {
+            alert('Thanks for subscribing to our newsletter!');
+        }
+        document.getElementById('newsletterEmail').value = '';
+    } else {
+        if (window.Utils) {
+            Utils.showNotification('Please enter a valid email address', 'error');
+        } else {
+            alert('Please enter a valid email address');
+        }
+    }
+}
+
 window.Utils = Utils;
+window.scrollToSection = scrollToSection;
+window.showDemoAlert = showDemoAlert;
+window.subscribeNewsletter = subscribeNewsletter;

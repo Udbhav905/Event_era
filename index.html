@@ -7,22 +7,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
-    <style>
-    .media-loading {
-        background: linear-gradient(90deg, #f3f4f6 25%, #e5e7eb 50%, #f3f4f6 75%);
-        background-size: 200% 100%;
-        animation: loading 1.5s infinite;
-        border-radius: 10px;
-    }
-    
-    @keyframes loading {
-        0% { background-position: 200% 0; }
-        100% { background-position: -200% 0; }
-    }
-</style>
 </head>
 <body>
-    <!-- Animated Background Elements -->
+    <!-- Animated Background Elements ---------------------------------------------------------------------------------------------->
     <div class="bg-elements">
         <div class="bg-circle circle-1"></div>
         <div class="bg-circle circle-2"></div>
@@ -31,7 +18,7 @@
         <div class="bg-shape shape-2"></div>
     </div>
 
-    <!-- Header -->
+    <!-- Header-------------------------------------------------------------------------------------------------------------------------------- -->
     <header class="header">
         <nav class="navbar">
             <div class="nav-brand">
@@ -44,7 +31,6 @@
                 <li><a href="#home" class="nav-link">Home</a></li>
                 <li><a href="#events" class="nav-link">Events</a></li>
                 <li><a href="#create" class="nav-link">Create</a></li>
-                <li><a href="#about" class="nav-link">About</a></li>
                 <li class="auth-buttons">
                     <button id="loginBtn" class="btn btn-ghost">Login</button>
                     <button id="registerBtn" class="btn btn-primary">Register</button>
@@ -65,9 +51,9 @@
         </nav>
     </header>
 
-    <!-- Main Content -->
+    <!-- Main Content-------------------------------------------------------------------------------------------------------------------------- -->
     <main>
-        <!-- Hero Section -->
+        <!-- Hero Section -------------------------------------------->
         <section id="home" class="hero">
             <div class="hero-bg"></div>
             <div class="hero-content">
@@ -83,27 +69,27 @@
                     <p class="hero-description">Find, create, and join events that match your interests. From concerts to conferences, we have something for everyone.</p>
                     <div class="hero-stats">
                         <div class="stat">
-                            <span class="stat-number">500+</span>
+                            <span class="stat-number">5+</span>
                             <span class="stat-label">Events</span>
                         </div>
                         <div class="stat">
-                            <span class="stat-number">10K+</span>
+                            <span class="stat-number">10+</span>
                             <span class="stat-label">Users</span>
                         </div>
                         <div class="stat">
-                            <span class="stat-number">50+</span>
+                            <span class="stat-number">10+</span>
                             <span class="stat-label">Cities</span>
                         </div>
                     </div>
                     <div class="hero-actions">
-                        <button class="btn btn-primary btn-large">
+                        <button class="btn btn-primary btn-large" onclick="scrollToSection('events')">
                             <i class="fas fa-rocket"></i>
                             Explore Events
                         </button>
-                        <button class="btn btn-outline btn-large">
-                            <i class="fas fa-play-circle"></i>
-                            Watch Demo
-                        </button>
+                        <button class="btn btn-outline btn-large" onclick="showDemo()">
+    <i class="fas fa-play-circle"></i>
+    Watch Demo
+</button>
                     </div>
                 </div>
                 <div class="hero-visual">
@@ -138,7 +124,7 @@
             </div>
         </section>
 
-        <!-- Events Section -->
+        <!-- Events Section----------------------------------------------------------------------------------------------------------------------- -->
         <section id="events" class="events-section">
             <div class="container">
                 <div class="section-header">
@@ -176,12 +162,12 @@
                 </div>
 
                 <div id="eventsContainer" class="events-grid">
-                    <!-- Events will be dynamically loaded here -->
+                    <!-- Events will be dynamically loaded here ----------------- -->
                 </div>
 
                 <div class="section-cta">
                     <p>Can't find what you're looking for?</p>
-                    <button class="btn btn-outline">
+                    <button class="btn btn-outline" onclick="scrollToSection('create')">
                         <i class="fas fa-plus"></i>
                         Create Your Own Event
                     </button>
@@ -189,7 +175,7 @@
             </div>
         </section>
 
-        <!-- Create Event Section -->
+        <!-- Create Event Section --------------------------------------------------------------------------------------------------------->
         <section id="create" class="create-section">
             <div class="container">
                 <div class="create-content">
@@ -269,28 +255,28 @@
             </div>
         </section>
 
-        <!-- CTA Section -->
+        <!-- CTA Section -------------------------------------------------------------------------------------------------------->
         <section class="cta-section">
             <div class="container">
                 <div class="cta-content">
                     <h2>Ready to Join Amazing Events?</h2>
                     <p>Join thousands of event enthusiasts and never miss out on exciting experiences.</p>
                     <div class="cta-buttons">
-                        <button class="btn btn-primary btn-large">
+                        <button class="btn btn-primary btn-large" onclick="auth.showAuthModal('register')">
                             <i class="fas fa-user-plus"></i>
                             Sign Up Free
                         </button>
-                        <button class="btn btn-outline btn-large">
-                            <i class="fas fa-play"></i>
-                            Watch Tour
-                        </button>
+                       <button class="btn btn-outline btn-large" onclick="showDemo()">
+    <i class="fas fa-play"></i>
+    Watch Tour
+</button>
                     </div>
                 </div>
             </div>
         </section>
     </main>
 
-    <!-- Footer -->
+    <!-- Footer ----------------------------------------------------------------------------------------------------------------------------->
     <footer class="footer">
         <div class="container">
             <div class="footer-content">
@@ -313,41 +299,45 @@
                         <li><a href="#home">Home</a></li>
                         <li><a href="#events">Events</a></li>
                         <li><a href="#create">Create Event</a></li>
-                        <li><a href="#about">About Us</a></li>
                     </ul>
                 </div>
                 <div class="footer-section">
                     <h4>Support</h4>
                     <ul>
-                        <li><a href="#">Help Center</a></li>
-                        <li><a href="#">Contact Us</a></li>
-                        <li><a href="#">Privacy Policy</a></li>
-                        <li><a href="#">Terms of Service</a></li>
+                        <!-- <li><a href="#" onclick="showDemoAlert()">Help Center</a></li>
+                        <li><a href="#" onclick="showDemoAlert()">Contact Us</a></li>
+                        <li><a href="#" onclick="showDemoAlert()">Privacy Policy</a></li>
+                        <li><a href="#" onclick="showDemoAlert()">Terms of Service</a></li> -->
+
+                        <li><a href="#" onclick="showDemo()">Help Center</a></li>
+<li><a href="#" onclick="showDemo()">Contact Us</a></li>
+<li><a href="#" onclick="showDemo()">Privacy Policy</a></li>
+<li><a href="#" onclick="showDemo()">Terms of Service</a></li>
                     </ul>
                 </div>
                 <div class="footer-section">
                     <h4>Newsletter</h4>
                     <p>Subscribe to get updates on upcoming events</p>
                     <div class="newsletter-form">
-                        <input type="email" placeholder="Your email address">
-                        <button class="btn btn-primary">
+                        <input type="email" placeholder="Your email address" id="newsletterEmail">
+                        <button type="button" class="btn btn-primary" onclick="subscribeNewsletter()">
                             <i class="fas fa-paper-plane"></i>
                         </button>
                     </div>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2023 Eventera. All rights reserved. Made with ❤️ for event lovers.</p>
+                <p>&copy; 2025 Eventera. All rights reserved with R&U. Made with ❤️ for event lovers.</p>
             </div>
         </div>
     </footer>
 
-    <!-- Auth Modal -->
+    <!-- Auth Modal--------------------------------------------------------------------------------------------------------------------------- -->
     <div id="authModal" class="modal hidden">
         <div class="modal-content">
             <span class="close">&times;</span>
             <div id="authForms">
-                <!-- Login and Register forms will be loaded here -->
+                <!-- Login and Register forms will be loaded here - 🎈 -->
             </div>
         </div>
     </div>
@@ -357,10 +347,57 @@
         <div class="modal-content event-detail">
             <span class="close">&times;</span>
             <div id="eventDetailContent">
-                <!-- Event details will be loaded here -->
+                <!-- Event details will be loaded here -🎈--------------------------------------------------------->
             </div>
         </div>
     </div>
+
+    <!-- Demo model --------  -->
+     <div id="demoModal" class="modal hidden">
+    <div class="modal-content" style="max-width: 800px;">
+        <span class="close">&times;</span>
+        <div class="demo-content">
+            <h2 style="text-align: center; margin-bottom: 1.5rem; color: var(--dark-color);">Eventera Platform Demo</h2>
+            <div class="video-container">
+                <div class="video-placeholder">
+                    <div class="placeholder-content">
+                        <i class="fas fa-play-circle" style="font-size: 4rem; color: var(--primary-color); margin-bottom: 1rem;"></i>
+                        <h3 style="color: var(--dark-color); margin-bottom: 0.5rem;">Interactive Platform Tour</h3>
+                        <p style="color: var(--gray-medium); margin-bottom: 1.5rem;">Experience how Eventera works with our step-by-step guide</p>
+                        <button class="btn btn-primary" onclick="startInteractiveTour()">
+                            <i class="fas fa-play"></i>
+                            Start Interactive Tour
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="demo-features" style="margin-top: 2rem; text-align: center;">
+                <h3 style="margin-bottom: 1rem; color: var(--dark-color);">What you'll discover:</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+                    <div class="feature-item">
+                        <i class="fas fa-search" style="color: var(--primary-color);"></i>
+                        <p>Event Discovery</p>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-plus" style="color: var(--success-color);"></i>
+                        <p>Event Creation</p>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-user-plus" style="color: var(--secondary-color);"></i>
+                        <p>User Registration</p>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-ticket-alt" style="color: var(--accent-color);"></i>
+                        <p>Event Management</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="tourTooltip" class="tour-tooltip hidden"></div>
+
+    
 
     <script src="js/storage.js"></script>
     <script src="js/utils.js"></script>

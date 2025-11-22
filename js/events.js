@@ -44,7 +44,7 @@ class EventsManager {
                 id: '1',
                 title: 'Tech Conference 2023',
                 description: 'Annual technology conference featuring the latest innovations in AI, blockchain, and cloud computing.',
-                date: '2023-12-15',
+                date: '2024-03-15',
                 time: '09:00',
                 location: 'Convention Center, Downtown',
                 category: 'tech',
@@ -57,7 +57,7 @@ class EventsManager {
                 id: '2',
                 title: 'Summer Music Festival',
                 description: 'Three days of amazing music performances from top artists across various genres.',
-                date: '2023-12-20',
+                date: '2024-03-20',
                 time: '14:00',
                 location: 'Central Park',
                 category: 'music',
@@ -70,7 +70,7 @@ class EventsManager {
                 id: '3',
                 title: 'Business Networking Event',
                 description: 'Connect with industry leaders and expand your professional network.',
-                date: '2023-12-10',
+                date: '2024-03-10',
                 time: '18:30',
                 location: 'Grand Hotel Ballroom',
                 category: 'business',
@@ -83,7 +83,7 @@ class EventsManager {
                 id: '4',
                 title: 'Art Exhibition Opening',
                 description: 'Exclusive preview of contemporary art from emerging artists.',
-                date: '2023-12-18',
+                date: '2024-03-18',
                 time: '19:00',
                 location: 'Modern Art Museum',
                 category: 'arts',
@@ -144,36 +144,14 @@ class EventsManager {
                 });
             }
 
-            // Modal close
-            const eventModal = document.getElementById('eventModal');
-            if (eventModal) {
-                eventModal.addEventListener('click', (e) => {
-                    if (e.target.id === 'eventModal') {
-                        e.target.classList.add('hidden');
-                    }
+            // Modal close buttons
+            document.querySelectorAll('.close').forEach(closeBtn => {
+                closeBtn.addEventListener('click', function() {
+                    this.closest('.modal').classList.add('hidden');
                 });
-            }
-
-            // Setup video preview for event form
-            this.setupVideoPreview();
-        }, 100);
-    }
-
-    setupVideoPreview() {
-        const videoInput = document.getElementById('eventVideo');
-        if (videoInput) {
-            videoInput.addEventListener('input', (e) => {
-                this.previewVideo(e.target.value);
             });
-        }
-    }
 
-    previewVideo(videoUrl) {
-        // This would typically show a preview of the video
-        // For now, we'll just validate the URL
-        if (videoUrl) {
-            console.log('Video URL provided:', videoUrl);
-        }
+        }, 100);
     }
 
     handleCreateEvent(e) {
@@ -197,9 +175,19 @@ class EventsManager {
             location: document.getElementById('eventLocation').value,
             category: document.getElementById('eventCategory').value,
             image: document.getElementById('eventImage').value || 'https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?w=400',
-            video: document.getElementById('eventVideo').value || '', // Add video URL
+            video: document.getElementById('eventVideo').value || '',
             createdBy: auth.getCurrentUser().id
         };
+
+        // Validate required fields
+        if (!eventData.title || !eventData.description || !eventData.date || !eventData.time || !eventData.location) {
+            if (window.Utils) {
+                Utils.showNotification('Please fill all required fields', 'error');
+            } else {
+                alert('Please fill all required fields');
+            }
+            return;
+        }
 
         const newEvent = storage.addEvent(eventData);
         this.events = storage.getEvents();
@@ -286,43 +274,43 @@ class EventsManager {
         });
     }
 
-   createEventCard(event) {
-    const isOwner = auth.isLoggedIn() && event.createdBy === auth.getCurrentUser().id;
-    const categoryColor = window.Utils ? Utils.getCategoryColor(event.category) : '#6c757d';
-    const formattedDate = window.Utils ? Utils.formatDate(event.date) : event.date;
-    const formattedTime = window.Utils ? Utils.formatTime(event.time) : event.time;
-    
-    // Add video icon if event has video
-    const videoIcon = event.video ? '<div class="video-icon">🎥</div>' : '';
-    
-    return `
-        <div class="event-card ${event.video ? 'video-event-card' : ''}">
-            <div class="event-media">
-                <img src="${event.image}" 
-                     alt="${event.title}" 
-                     class="event-image"
-                     onerror="Utils.handleImageError(this, '${event.title.replace(/'/g, "\\'")}')"
-                     loading="lazy">
-                ${videoIcon}
-            </div>
-            <div class="event-content">
-                <h3 class="event-title">${event.title}</h3>
-                <div class="event-meta">
-                    <span>${formattedDate}</span>
-                    <span>${formattedTime}</span>
+    createEventCard(event) {
+        const isOwner = auth.isLoggedIn() && event.createdBy === auth.getCurrentUser().id;
+        const categoryColor = window.Utils ? Utils.getCategoryColor(event.category) : '#6c757d';
+        const formattedDate = window.Utils ? Utils.formatDate(event.date) : event.date;
+        const formattedTime = window.Utils ? Utils.formatTime(event.time) : event.time;
+        
+        // Add video icon if event has video
+        const videoIcon = event.video ? '<div class="video-icon">🎥</div>' : '';
+        
+        return `
+            <div class="event-card ${event.video ? 'video-event-card' : ''}">
+                <div class="event-media">
+                    <img src="${event.image}" 
+                         alt="${event.title}" 
+                         class="event-image"
+                         onerror="Utils.handleImageError(this, '${event.title.replace(/'/g, "\\'")}')"
+                         loading="lazy">
+                    ${videoIcon}
                 </div>
-                <span class="event-category" style="background-color: ${categoryColor}20; color: ${categoryColor};">
-                    ${event.category.charAt(0).toUpperCase() + event.category.slice(1)}
-                </span>
-                <p class="event-description">${event.description.substring(0, 100)}...</p>
-                <div class="event-actions">
-                    <button class="btn btn-primary view-event" data-event-id="${event.id}">View Details</button>
-                    ${isOwner ? `<button class="btn btn-danger delete-event" data-event-id="${event.id}">Delete</button>` : ''}
+                <div class="event-content">
+                    <h3 class="event-title">${event.title}</h3>
+                    <div class="event-meta">
+                        <span>${formattedDate}</span>
+                        <span>${formattedTime}</span>
+                    </div>
+                    <span class="event-category" style="background-color: ${categoryColor}20; color: ${categoryColor};">
+                        ${event.category.charAt(0).toUpperCase() + event.category.slice(1)}
+                    </span>
+                    <p class="event-description">${event.description.substring(0, 100)}...</p>
+                    <div class="event-actions">
+                        <button class="btn btn-primary view-event" data-event-id="${event.id}">View Details</button>
+                        ${isOwner ? `<button class="btn btn-danger delete-event" data-event-id="${event.id}">Delete</button>` : ''}
+                    </div>
                 </div>
             </div>
-        </div>
-    `;
-}
+        `;
+    }
 
     showEventDetails(eventId) {
         const event = this.events.find(e => e.id === eventId);
@@ -340,11 +328,11 @@ class EventsManager {
 
         // Create media section - show video if available, otherwise show image
         const mediaSection = event.video ? 
-    this.createVideoSection(event) : 
-    `<img src="${event.image}" 
-          alt="${event.title}" 
-          class="event-detail-image"
-          onerror="Utils.handleImageError(this, '${event.title.replace(/'/g, "\\'")}')">`;
+            this.createVideoSection(event) : 
+            `<img src="${event.image}" 
+                  alt="${event.title}" 
+                  class="event-detail-image"
+                  onerror="Utils.handleImageError(this, '${event.title.replace(/'/g, "\\'")}')">`;
 
         content.innerHTML = `
             <div class="event-detail-header">
@@ -418,24 +406,18 @@ class EventsManager {
                     controls 
                     class="event-video"
                     poster="${event.image}"
-                    onerror="this.style.display='none'; document.getElementById('fallbackImage').style.display='block'"
+                    onerror="Utils.handleVideoError(this, '${event.title.replace(/'/g, "\\'")}')"
                 >
                     <source src="${event.video}" type="video/mp4">
                     <source src="${event.video}" type="video/webm">
                     <source src="${event.video}" type="video/ogg">
                     Your browser does not support the video tag.
                 </video>
-                <img 
-                    id="fallbackImage" 
-                    src="${event.image}" 
-                    alt="${event.title}" 
-                    style="display: none; width: 100%; border-radius: 10px;"
-                >
                 <div class="video-controls">
-                    <button onclick="this.parentElement.parentElement.querySelector('video').play()">Play</button>
-                    <button onclick="this.parentElement.parentElement.querySelector('video').pause()">Pause</button>
-                    <button onclick="this.parentElement.parentElement.querySelector('video').volume += 0.1">Volume +</button>
-                    <button onclick="this.parentElement.parentElement.querySelector('video').volume -= 0.1">Volume -</button>
+                    <button onclick="this.parentElement.querySelector('video').play()">Play</button>
+                    <button onclick="this.parentElement.querySelector('video').pause()">Pause</button>
+                    <button onclick="this.parentElement.querySelector('video').volume += 0.1">Volume +</button>
+                    <button onclick="this.parentElement.querySelector('video').volume -= 0.1">Volume -</button>
                 </div>
             </div>
         `;
@@ -452,9 +434,7 @@ class EventsManager {
             alert('Event deleted successfully');
         }
     }
-    
 }
-
 
 // Initialize EventsManager only after DOM is ready
 document.addEventListener('DOMContentLoaded', function() {
