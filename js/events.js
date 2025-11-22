@@ -339,24 +339,25 @@ class EventsManager {
                 ${mediaSection}
                 <h2>${event.title}</h2>
             </div>
+            
             <div class="event-detail-info">
                 <div class="info-item">
-                    <strong>Date & Time:</strong>
+                    <strong>📅 Date & Time:</strong>
                     <span>${formattedDateTime}</span>
                 </div>
                 <div class="info-item">
-                    <strong>Location:</strong>
+                    <strong>📍 Location:</strong>
                     <span>${event.location}</span>
                 </div>
                 <div class="info-item">
-                    <strong>Category:</strong>
+                    <strong>🧬 Category:</strong>
                     <span class="event-category" style="background-color: ${categoryColor}20; color: ${categoryColor};">
                         ${event.category.charAt(0).toUpperCase() + event.category.slice(1)}
                     </span>
                 </div>
             </div>
             <div class="event-detail-description">
-                <h3>Description</h3>
+                <h3>⚠️ Description</h3>
                 <p>${event.description}</p>
             </div>
             <div class="event-detail-actions">
