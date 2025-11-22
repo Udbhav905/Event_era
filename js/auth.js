@@ -1,4 +1,3 @@
-// Authentication Management
 class Auth {
     constructor() {
         this.currentUser = storage.getCurrentUser();
@@ -11,19 +10,16 @@ class Auth {
     }
 
     setupEventListeners() {
-        
         document.getElementById('loginBtn').addEventListener('click', () => this.showAuthModal('login'));
         document.getElementById('registerBtn').addEventListener('click', () => this.showAuthModal('register'));
         document.getElementById('logoutBtn').addEventListener('click', () => this.logout());
 
-   
         document.querySelectorAll('.close').forEach(closeBtn => {
             closeBtn.addEventListener('click', (e) => {
                 e.target.closest('.modal').classList.add('hidden');
             });
         });
 
-        
         document.getElementById('authModal').addEventListener('click', (e) => {
             if (e.target.id === 'authModal') {
                 e.target.classList.add('hidden');
@@ -38,11 +34,67 @@ class Auth {
         authForms.innerHTML = this.getAuthFormsHTML(activeTab);
         modal.classList.remove('hidden');
 
+        // Setup form event listeners
+        this.setupAuthFormListeners();
         
+        // Setup tab event listeners
+        this.setupTabListeners();
+    }
+
+    getAuthFormsHTML(activeTab) {
+        return `
+            <div class="auth-modal-content">
+                
+                <div class="auth-tabs">
+                    <button class="auth-tab ${activeTab === 'login' ? 'active' : ''}" data-tab="login">Login</button>
+                    <button class="auth-tab ${activeTab === 'register' ? 'active' : ''}" data-tab="register">Register</button>
+                </div>
+                
+                <div class="auth-forms-container">
+                    <div class="auth-form-container ${activeTab === 'login' ? 'active' : ''}" id="loginFormContainer">
+                        <form id="loginForm" class="auth-form">
+                            <h3>Welcome Back</h3>
+                            <div class="form-group">
+                                <label for="loginEmail">Email</label>
+                                <input type="email" id="loginEmail" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="loginPassword">Password</label>
+                                <input type="password" id="loginPassword" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-block">Login</button>
+                        </form>
+                    </div>
+                    
+                    <div class="auth-form-container ${activeTab === 'register' ? 'active' : ''}" id="registerFormContainer">
+                        <form id="registerForm" class="auth-form">
+                            <h3>Create Account</h3>
+                            <div class="form-group">
+                                <label for="registerName">Full Name</label>
+                                <input type="text" id="registerName" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="registerEmail">Email</label>
+                                <input type="email" id="registerEmail" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="registerPassword">Password</label>
+                                <input type="password" id="registerPassword" required minlength="6">
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-block">Register</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+
+    setupAuthFormListeners() {
         document.getElementById('loginForm').addEventListener('submit', (e) => this.handleLogin(e));
         document.getElementById('registerForm').addEventListener('submit', (e) => this.handleRegister(e));
+    }
 
-        
+    setupTabListeners() {
         document.querySelectorAll('.auth-tab').forEach(tab => {
             tab.addEventListener('click', (e) => {
                 const tabName = e.target.dataset.tab;
@@ -51,53 +103,16 @@ class Auth {
         });
     }
 
-    getAuthFormsHTML(activeTab) {
-        return `
-            <div class="auth-tabs">
-                <div class="auth-tab ${activeTab === 'login' ? 'active' : ''}" data-tab="login">Login</div>
-                <div class="auth-tab ${activeTab === 'register' ? 'active' : ''}" data-tab="register">Register</div>
-            </div>
-            <div class="auth-content ${activeTab === 'login' ? 'active' : ''}" id="loginContent">
-                <form id="loginForm" class="auth-form">
-                    <h3>Welcome Back</h3>
-                    <div class="form-group">
-                        <label for="loginEmail">Email</label>
-                        <input type="email" id="loginEmail" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="loginPassword">Password</label>
-                        <input type="password" id="loginPassword" required>
-                    </div>
-                    <button type="submit" class="btn btn-primary btn-block">Login</button>
-                </form>
-            </div>
-            <div class="auth-content ${activeTab === 'register' ? 'active' : ''}" id="registerContent">
-                <form id="registerForm" class="auth-form">
-                    <h3>Create Account</h3>
-                    <div class="form-group">
-                        <label for="registerName">Full Name</label>
-                        <input type="text" id="registerName" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="registerEmail">Email</label>
-                        <input type="email" id="registerEmail" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="registerPassword">Password</label>
-                        <input type="password" id="registerPassword" required minlength="6">
-                    </div>
-                    <button type="submit" class="btn btn-primary btn-block">Register</button>
-                </form>
-            </div>
-        `;
-    }
-
     switchAuthTab(tabName) {
-        document.querySelectorAll('.auth-tab').forEach(tab => tab.classList.remove('active'));
-        document.querySelectorAll('.auth-content').forEach(content => content.classList.remove('active'));
-        
-        document.querySelector(`[data-tab="${tabName}"]`).classList.add('active');
-        document.getElementById(`${tabName}Content`).classList.add('active');
+        // Update tabs
+        document.querySelectorAll('.auth-tab').forEach(tab => {
+            tab.classList.toggle('active', tab.dataset.tab === tabName);
+        });
+
+        // Update form containers
+        document.querySelectorAll('.auth-form-container').forEach(container => {
+            container.classList.toggle('active', container.id === `${tabName}FormContainer`);
+        });
     }
 
     handleLogin(e) {
@@ -171,8 +186,16 @@ class Auth {
     getCurrentUser() {
         return this.currentUser;
     }
-    
 }
 
+// Demo modal close events
+document.addEventListener('click', (e) => {
+    const demoModal = document.getElementById('demoModal');
+    if (demoModal && !demoModal.classList.contains('hidden')) {
+        if (e.target.classList.contains('close') || e.target.id === 'demoModal') {
+            demoModal.classList.add('hidden');
+        }
+    }
+});
 
 const auth = new Auth();
